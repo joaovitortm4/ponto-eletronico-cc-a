@@ -12,7 +12,8 @@ function updateContentHour(){
 //retorna hora atual (horas/minutos/segundos)
 function getCurrenteTime(){
     const date = new Date();
-    return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds ();
+
+    return String(date.getHours()).padStart(2, '0') + ":" + String(date.getMinutes()).padStart(2, '0') + ":" + String(date.getSeconds()).padStart(2, '0');
 }
 
 //retorna a data atual no padra dd/mm/aa
@@ -21,7 +22,7 @@ function getCurrenteDate(){
 
     let mes = date.getMonth() +1;
 
-    return date.getDate() + "/" + mes  + "/" + date.getFullYear ();
+    return String(date.getDate()).padStart(2, '0') + "/" + String(mes).padStart(2, '0')  + "/" + String(date.getFullYear()).padStart(2, '0');
 }
 
 function getWeekDay(){
