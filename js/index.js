@@ -5,7 +5,8 @@ const horaAtual = document.getElementById("hora-atual");
 const btnRegistrarPonto = document.getElementById("btn-registrar-ponto");
 btnRegistrarPonto.addEventListener("click", register);
 function register(){
-    alert("Bater ponto!");
+    //alert("Bater ponto!");
+    dialogPonto.showModal();
 }
 
 diaSemana.textContent = getWeekDay();
