@@ -2,8 +2,22 @@ const diaSemana = document.getElementById("dia-semana");
 const dataAtual = document.getElementById("data-atual");
 const horaAtual = document.getElementById("hora-atual");
 
+const btnRegistrarPonto = document.getElementById("btn-registrar-ponto");
+btnRegistrarPonto.addEventListener("click", register);
+function register(){
+    alert("Bater ponto!");
+}
+
 diaSemana.textContent = getWeekDay();
 dataAtual.textContent = getCurrenteDate();
+
+const dialogPonto = document.getElementById("dialog-ponto");
+dialogPonto.showModal();
+
+const feharDialog = document.getElementById("fechar-dialog");
+feharDialog.addEventListener("click", () => {
+    dialogPonto.close();
+});
 
 function updateContentHour(){
     horaAtual.textContent = getCurrenteTime();
