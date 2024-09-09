@@ -1,3 +1,17 @@
+function getUserLocation(){
+    navigator.geolocation.getCurrentPosition((position) => {
+        let userLocation = {
+            "lat": position.coords.latitude,
+            "long": position.coords.longitude
+        }
+        return userLocation
+    });
+}
+
+navigator.geolocation.getCurrentPosition(() => {
+    console.log(position);
+});
+
 const diaSemana = document.getElementById("dia-semana");
 const dataAtual = document.getElementById("data-atual");
 const horaAtual = document.getElementById("hora-atual");
@@ -13,11 +27,48 @@ diaSemana.textContent = getWeekDay();
 dataAtual.textContent = getCurrenteDate();
 
 const dialogPonto = document.getElementById("dialog-ponto");
-dialogPonto.showModal();
+
+const dialogData = document.getElementById("dialog-data");
+dialogData.textContent = getCurrenteDate();
+
+const dialogHora = document.getElementById("dialog-hora");
+dialogHora.textContent = getCurrenteTime();
 
 const feharDialog = document.getElementById("fechar-dialog");
 feharDialog.addEventListener("click", () => {
     dialogPonto.close();
+});
+
+const entradaTrabalho = document.getElementById("entrada-trabalho");
+entradaTrabalho.addEventListener("click", () => {
+    
+    let currentDate = getCurrenteDate();
+    let currentTime = getCurrenteTime();
+    let userLocation = getUserLocation();
+
+    ponto = {
+        "date": currentDate,
+        "time": currentTime,
+        "location": userLocation,
+        "id": 1,
+        "type": "entrada"
+    }
+});
+
+const saidaTrabalho = document.getElementById("saida-trabalho");
+saidaTrabalho.addEventListener("click", () => {
+
+    let currentDate = getCurrenteDate();
+    let currentTime = getCurrenteTime();
+    let userLocation = getUserLocation();
+
+    ponto = {
+        "date": currentDate,
+        "time": currentTime,
+        "location": userLocation,
+        "id": 2,
+        "type": "saida"
+    };
 });
 
 function updateContentHour(){
