@@ -4,9 +4,28 @@ function getUserLocation(){
             "lat": position.coords.latitude,
             "long": position.coords.longitude
         }
-        return userLocation
+        return userLocation;
     });
 }
+
+//Como garantir que uma função assíncrona ja foi executada/processada?
+//Possiveis soluções
+
+//getUserLocation(functionCallback){
+    //navigator.geolocation.getCurrentPosition((position) => {
+        //OBJETO com let e long
+        //}
+        //functionCallback(userLocation)
+    //})
+//}
+
+//OU
+
+//getUserLocation(){
+    //return new Promise((suc, fai) => {
+        //navigator.geolocation.getCurrentPosition()
+    //})
+//}
 
 navigator.geolocation.getCurrentPosition(() => {
     console.log(position);
@@ -18,6 +37,7 @@ const horaAtual = document.getElementById("hora-atual");
 
 const btnRegistrarPonto = document.getElementById("btn-registrar-ponto");
 btnRegistrarPonto.addEventListener("click", register);
+
 function register(){
     //alert("Bater ponto!");
     dialogPonto.showModal();
@@ -39,37 +59,35 @@ feharDialog.addEventListener("click", () => {
     dialogPonto.close();
 });
 
+//localStorage.setItem("aula", "programação web");
+
+function saveRegisterLocalStorage(register){
+    localStorage.setItem("register", register);
+}
+
+
 const entradaTrabalho = document.getElementById("entrada-trabalho");
 entradaTrabalho.addEventListener("click", () => {
-    
-    let currentDate = getCurrenteDate();
-    let currentTime = getCurrenteTime();
-    let userLocation = getUserLocation();
-
-    ponto = {
-        "date": currentDate,
-        "time": currentTime,
-        "location": userLocation,
-        "id": 1,
-        "type": "entrada"
-    }
+    saveRegisterLocalStorage(JSON.stringify(getObjectRegister("entrada")));
 });
 
 const saidaTrabalho = document.getElementById("saida-trabalho");
 saidaTrabalho.addEventListener("click", () => {
+    saveRegisterLocalStorage(JSON.stringify(getObjectRegister("saida")));
+});
 
-    let currentDate = getCurrenteDate();
-    let currentTime = getCurrenteTime();
-    let userLocation = getUserLocation();
+function getObjectRegister(registerType){
+    getUserLocation();
 
     ponto = {
-        "date": currentDate,
-        "time": currentTime,
-        "location": userLocation,
-        "id": 2,
-        "type": "saida"
-    };
-});
+        "date": getCurrenteDate(),
+        "time": getCurrenteTime(),
+        "location": getUserLocation(),
+        "id": 1,
+        "type": registerType
+    }
+    return ponto;
+}
 
 function updateContentHour(){
     horaAtual.textContent = getCurrenteTime();
