@@ -97,6 +97,27 @@ saidaTrabalho.addEventListener("click", () => {
 
 const selectRegisterType = document.getElementById("register-type");
 
+
+function setRegisterType(){
+    let lastType = localStorage.getItem("lastRegisterType");
+    if (lastType == "entrada"){
+        selectRegisterType.value = "intervalo";
+    }
+
+    if (lastType == "intervalo"){
+        selectRegisterType.value = "volta-intervalo";
+    }
+    
+    if (lastType == "volta-intervalo"){
+        selectRegisterType.value = "saida";
+    }
+
+    if (lastType == "saida"){
+        selectRegisterType.value = "entrada";
+    }
+}
+
+
 const btnDialogRegister = document.getElementById("btn-dialog-register");
 btnDialogRegister.addEventListener("click", () =>{
 
@@ -104,6 +125,8 @@ btnDialogRegister.addEventListener("click", () =>{
     saveRegisterLocalStorage(register);
 
     localStorage.setItem("lastRegisterType", selectRegisterType.value);
+
+    dialogPonto.close();
 
 });
 
