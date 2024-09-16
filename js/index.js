@@ -83,7 +83,7 @@ function getRegisterLocalStorage(key){
     return JSON.parse(registers);
 }
 
-
+/*
 const entradaTrabalho = document.getElementById("entrada-trabalho");
 entradaTrabalho.addEventListener("click", () => {
     saveRegisterLocalStorage(getObjectRegister("entrada"));
@@ -92,6 +92,19 @@ entradaTrabalho.addEventListener("click", () => {
 const saidaTrabalho = document.getElementById("saida-trabalho");
 saidaTrabalho.addEventListener("click", () => {
     saveRegisterLocalStorage(getObjectRegister("saida"));
+});
+*/
+
+const selectRegisterType = document.getElementById("register-type");
+
+const btnDialogRegister = document.getElementById("btn-dialog-register");
+btnDialogRegister.addEventListener("click", () =>{
+
+    let register = getObjectRegister(selectRegisterType.value);
+    saveRegisterLocalStorage(register);
+
+    localStorage.setItem("lastRegisterType", selectRegisterType.value);
+
 });
 
 function getObjectRegister(registerType){
