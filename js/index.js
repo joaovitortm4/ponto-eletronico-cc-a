@@ -59,10 +59,15 @@ feharDialog.addEventListener("click", () => {
     dialogPonto.close();
 });
 
-//localStorage.setItem("aula", "programação web");
+//salvar e recuperar um array de objetos oa inves de 1 objeto
 
 function saveRegisterLocalStorage(register){
     localStorage.setItem("register", register);
+}
+
+function getRegisterLocalStorage(key){
+    //retornar o valor correspondente à chave (key)
+    //getItem(chave)
 }
 
 
