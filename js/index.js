@@ -59,26 +59,39 @@ feharDialog.addEventListener("click", () => {
     dialogPonto.close();
 });
 
-//salvar e recuperar um array de objetos oa inves de 1 objeto
+
+
+let RegistersLocalStorage = getRegisterLocalStorage("register");
+
+
 
 function saveRegisterLocalStorage(register){
-    localStorage.setItem("register", register);
+
+    RegistersLocalStorage.push(register);
+
+    localStorage.setItem("register", JSON.stringify(register));
 }
 
 function getRegisterLocalStorage(key){
-    //retornar o valor correspondente à chave (key)
-    //getItem(chave)
+
+    let registers = localStorage.getItem(key);
+
+    if(registers){
+        return[];
+    }
+
+    return JSON.parse(registers);
 }
 
 
 const entradaTrabalho = document.getElementById("entrada-trabalho");
 entradaTrabalho.addEventListener("click", () => {
-    saveRegisterLocalStorage(JSON.stringify(getObjectRegister("entrada")));
+    saveRegisterLocalStorage(getObjectRegister("entrada"));
 });
 
 const saidaTrabalho = document.getElementById("saida-trabalho");
 saidaTrabalho.addEventListener("click", () => {
-    saveRegisterLocalStorage(JSON.stringify(getObjectRegister("saida")));
+    saveRegisterLocalStorage(getObjectRegister("saida"));
 });
 
 function getObjectRegister(registerType){
