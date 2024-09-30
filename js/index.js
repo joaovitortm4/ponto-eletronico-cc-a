@@ -39,7 +39,9 @@ const btnRegistrarPonto = document.getElementById("btn-registrar-ponto");
 btnRegistrarPonto.addEventListener("click", register);
 
 function register(){
-    //alert("Bater ponto!");
+
+    
+
     dialogPonto.showModal();
 }
 
@@ -125,6 +127,15 @@ btnDialogRegister.addEventListener("click", () =>{
     saveRegisterLocalStorage(register);
 
     localStorage.setItem("lastRegisterType", selectRegisterType.value);
+
+    const alertaSucesso = document.getElementById("alerta-ponto-registrado")
+    alertaSucesso.classList.remove("hidden");
+    alertaSucesso.classList.add("show");
+
+    setTimeout(() => {
+        alertaSucesso.classList.remove("show");
+        alertaSucesso.classList.add("hidden");
+    }, 5000);
 
     dialogPonto.close();
 
