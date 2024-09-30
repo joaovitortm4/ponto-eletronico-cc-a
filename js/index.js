@@ -27,6 +27,21 @@ function getUserLocation(){
     //})
 //}
 
+function getUserLocation(){
+    return Promise((resolve, reject) =>{
+        navigator.geolocation.getCurrentPosition((position) => {
+            let userLocation = {
+                "Latitude": position.coords.latitude,
+                "Longitude": position.coords.longitude
+            }
+            resolve(userLocation);
+        },
+        (error) => {
+            reject("Erro" + error);
+        });
+    });
+}
+
 navigator.geolocation.getCurrentPosition(() => {
     console.log(position);
 });
@@ -40,7 +55,24 @@ btnRegistrarPonto.addEventListener("click", register);
 
 function register(){
 
-    
+    const dialogUltimoRegistro = document.getElementById ("dialog-ultimo-registro");
+    let lastRegister = JSON.parse(localStorage.getItem("lastRegister"));
+
+    if(lastRegister) {
+        let lastDateRegister = lastRegister.date;
+        let lastTimeRegister = lastRegister.time;
+        let lastRegisterType = lastRegister.type;
+
+        dialogUltimoRegistro.textContent = "Ultimo Registro" + lastDateRegister + " | " + lastTimeRegister + " | " + lastRegisterType;
+    }
+
+    dialogHora.textContent = "Hora: " + getCurrenteTime();
+
+     let interval = setInterval(() => {
+        dialogHora.textContent = "Hora: " + getCurrenteTime();
+     }, 1000);
+
+     console.log(interval);
 
     dialogPonto.showModal();
 }
@@ -51,10 +83,10 @@ dataAtual.textContent = getCurrenteDate();
 const dialogPonto = document.getElementById("dialog-ponto");
 
 const dialogData = document.getElementById("dialog-data");
-dialogData.textContent = getCurrenteDate();
+dialogData.textContent = "Data: " + getCurrenteDate();
 
 const dialogHora = document.getElementById("dialog-hora");
-dialogHora.textContent = getCurrenteTime();
+//dialogHora.textContent = getCurrenteTime();
 
 const feharDialog = document.getElementById("fechar-dialog");
 feharDialog.addEventListener("click", () => {
@@ -66,12 +98,10 @@ feharDialog.addEventListener("click", () => {
 let RegistersLocalStorage = getRegisterLocalStorage("register");
 
 
-
 function saveRegisterLocalStorage(register){
 
     RegistersLocalStorage.push(register);
-
-    localStorage.setItem("register", JSON.stringify(register));
+    localStorage.setItem("register", JSON.stringify(RegistersLocalStorage));
 }
 
 function getRegisterLocalStorage(key){
@@ -126,7 +156,9 @@ btnDialogRegister.addEventListener("click", () =>{
     let register = getObjectRegister(selectRegisterType.value);
     saveRegisterLocalStorage(register);
 
-    localStorage.setItem("lastRegisterType", selectRegisterType.value);
+
+    localStorage.setItem("lastRegister", JSON.stringify(register));
+
 
     const alertaSucesso = document.getElementById("alerta-ponto-registrado")
     alertaSucesso.classList.remove("hidden");
@@ -141,13 +173,14 @@ btnDialogRegister.addEventListener("click", () =>{
 
 });
 
-function getObjectRegister(registerType){
-    getUserLocation();
+async function getObjectRegister(registerType){
+
+    const location = await getUserLocation();
 
     ponto = {
         "date": getCurrenteDate(),
         "time": getCurrenteTime(),
-        "location": getUserLocation(),
+        "location": location,
         "id": 1,
         "type": registerType
     }
