@@ -7,17 +7,19 @@
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
-    <div class="data-hora">
-        <p id="dia-semana"></p>
-        <p id="data-atual"></p>
-        <p id="hora-atual"></p>
+    <div class="caixa">
+        <div class="data-hora">
+            <p id="dia-semana"></p>
+            <p id="data-atual"></p>
+            <p id="hora-atual"></p>
+        </div>
+        <button id="btn-registrar-ponto">Registrar ponto</button>
     </div>
-    <button id="btn-registrar-ponto">Registrar ponto</button>
 
     <dialog id="dialog-ponto">
         <p id="dialog-data">Data</p>
         <p id="dialog-hora">Hora</p>
-        <select>
+        <select id="register-type">
             <option value="entrada">Entrada</option>
             <option value="intervalo">Intervalo</option>
             <option value="volta-intervalo">Volta Intervalo</option>

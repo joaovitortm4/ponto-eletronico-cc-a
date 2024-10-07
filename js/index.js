@@ -1,81 +1,9 @@
-function getUserLocation(){
-    navigator.geolocation.getCurrentPosition((position) => {
-        let userLocation = {
-            "lat": position.coords.latitude,
-            "long": position.coords.longitude
-        }
-        return userLocation;
-    });
-}
-
-//Como garantir que uma função assíncrona ja foi executada/processada?
-//Possiveis soluções
-
-//getUserLocation(functionCallback){
-    //navigator.geolocation.getCurrentPosition((position) => {
-        //OBJETO com let e long
-        //}
-        //functionCallback(userLocation)
-    //})
-//}
-
-//OU
-
-//getUserLocation(){
-    //return new Promise((suc, fai) => {
-        //navigator.geolocation.getCurrentPosition()
-    //})
-//}
-
-function getUserLocation(){
-    return Promise((resolve, reject) =>{
-        navigator.geolocation.getCurrentPosition((position) => {
-            let userLocation = {
-                "Latitude": position.coords.latitude,
-                "Longitude": position.coords.longitude
-            }
-            resolve(userLocation);
-        },
-        (error) => {
-            reject("Erro" + error);
-        });
-    });
-}
-
-navigator.geolocation.getCurrentPosition(() => {
-    console.log(position);
-});
-
 const diaSemana = document.getElementById("dia-semana");
 const dataAtual = document.getElementById("data-atual");
 const horaAtual = document.getElementById("hora-atual");
-
 const btnRegistrarPonto = document.getElementById("btn-registrar-ponto");
+
 btnRegistrarPonto.addEventListener("click", register);
-
-function register(){
-
-    const dialogUltimoRegistro = document.getElementById ("dialog-ultimo-registro");
-    let lastRegister = JSON.parse(localStorage.getItem("lastRegister"));
-
-    if(lastRegister) {
-        let lastDateRegister = lastRegister.date;
-        let lastTimeRegister = lastRegister.time;
-        let lastRegisterType = lastRegister.type;
-
-        dialogUltimoRegistro.textContent = "Ultimo Registro" + lastDateRegister + " | " + lastTimeRegister + " | " + lastRegisterType;
-    }
-
-    dialogHora.textContent = "Hora: " + getCurrenteTime();
-
-     let interval = setInterval(() => {
-        dialogHora.textContent = "Hora: " + getCurrenteTime();
-     }, 1000);
-
-     console.log(interval);
-
-    dialogPonto.showModal();
-}
 
 diaSemana.textContent = getWeekDay();
 dataAtual.textContent = getCurrenteDate();
@@ -88,47 +16,7 @@ dialogData.textContent = "Data: " + getCurrenteDate();
 const dialogHora = document.getElementById("dialog-hora");
 //dialogHora.textContent = getCurrenteTime();
 
-const feharDialog = document.getElementById("fechar-dialog");
-feharDialog.addEventListener("click", () => {
-    dialogPonto.close();
-});
-
-
-
-let RegistersLocalStorage = getRegisterLocalStorage("register");
-
-
-function saveRegisterLocalStorage(register){
-
-    RegistersLocalStorage.push(register);
-    localStorage.setItem("register", JSON.stringify(RegistersLocalStorage));
-}
-
-function getRegisterLocalStorage(key){
-
-    let registers = localStorage.getItem(key);
-
-    if(registers){
-        return[];
-    }
-
-    return JSON.parse(registers);
-}
-
-/*
-const entradaTrabalho = document.getElementById("entrada-trabalho");
-entradaTrabalho.addEventListener("click", () => {
-    saveRegisterLocalStorage(getObjectRegister("entrada"));
-});
-
-const saidaTrabalho = document.getElementById("saida-trabalho");
-saidaTrabalho.addEventListener("click", () => {
-    saveRegisterLocalStorage(getObjectRegister("saida"));
-});
-*/
-
 const selectRegisterType = document.getElementById("register-type");
-
 
 function setRegisterType(){
     let lastType = localStorage.getItem("lastRegisterType");
@@ -149,11 +37,10 @@ function setRegisterType(){
     }
 }
 
-
 const btnDialogRegister = document.getElementById("btn-dialog-register");
-btnDialogRegister.addEventListener("click", () =>{
+btnDialogRegister.addEventListener("click", async () =>{
 
-    let register = getObjectRegister(selectRegisterType.value);
+    let register = await getObjectRegister(selectRegisterType.value);
     saveRegisterLocalStorage(register);
 
 
@@ -185,6 +72,80 @@ async function getObjectRegister(registerType){
         "type": registerType
     }
     return ponto;
+}
+
+function getUserLocation(){
+    navigator.geolocation.getCurrentPosition((position) => {
+        let userLocation = {
+            "lat": position.coords.latitude,
+            "long": position.coords.longitude
+        }
+        return userLocation;
+    });
+}
+
+const feharDialog = document.getElementById("fechar-dialog");
+feharDialog.addEventListener("click", () => {
+    dialogPonto.close();
+});
+
+let RegistersLocalStorage = getRegisterLocalStorage("register");
+
+
+function saveRegisterLocalStorage(register){
+
+    RegistersLocalStorage.push(register);
+    localStorage.setItem("register", JSON.stringify(RegistersLocalStorage));
+}
+
+function getRegisterLocalStorage(key){
+
+    let registers = localStorage.getItem(key);
+
+    if(registers){
+        return[];
+    }
+
+    return JSON.parse(registers);
+}
+
+function getUserLocation(){
+    return new Promise((resolve, reject) =>{
+        navigator.geolocation.getCurrentPosition((position) => {
+            let userLocation = {
+                "Latitude": position.coords.latitude,
+                "Longitude": position.coords.longitude
+            }
+            resolve(userLocation);
+        },
+        (error) => {
+            reject("Erro" + error);
+        });
+    });
+}
+
+function register(){
+
+    const dialogUltimoRegistro = document.getElementById ("dialog-ultimo-registro");
+    let lastRegister = JSON.parse(localStorage.getItem("lastRegister"));
+
+    if(lastRegister) {
+        let lastDateRegister = lastRegister.date;
+        let lastTimeRegister = lastRegister.time;
+        let lastRegisterType = lastRegister.type;
+
+        dialogUltimoRegistro.textContent = "Último Registro: " + lastDateRegister + " | " + lastTimeRegister + " | " + lastRegisterType;
+    }
+
+    dialogHora.textContent = "Hora: " + getCurrenteTime();
+
+     let interval = setInterval(() => {
+        dialogHora.textContent = "Hora: " + getCurrenteTime();
+     }, 1000);
+
+     console.log(interval);
+
+    dialogPonto.showModal();
 }
 
 function updateContentHour(){
