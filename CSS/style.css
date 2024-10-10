@@ -1,27 +1,25 @@
-/* Centralizar todo o conteúdo */
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+.body-class {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #f0f0f0;
+    height: 100vh;
+    margin: 0;
 }
 
-/* Caixa ao redor do conteúdo */
 .caixa {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     text-align: center;
-    width: 300px; /* Largura fixa */
-    margin: 0 auto;
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    height: 180px;
 }
 
-/* Centralizar a data e a hora */
 .data-hora {
     text-align: center;
     margin-bottom: 20px;
@@ -32,7 +30,6 @@ body, html {
     margin: 5px 0;
 }
 
-/* Estilizando o botão de registrar ponto */
 #btn-registrar-ponto {
     background-color: black;
     border: none;
@@ -44,14 +41,13 @@ body, html {
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    width: 100%; /* Deixa o botão com 100% da largura */
+    width: 100%;
 }
 
 #btn-registrar-ponto:hover {
     background-color: #2f3c30;
 }
 
-/* Estilizando o diálogo */
 dialog {
     border: none;
     border-radius: 10px;
@@ -67,7 +63,6 @@ dialog p {
     font-size: 1.2rem;
 }
 
-/* Estilizar o select e o botão dentro do dialog */
 dialog select {
     width: 100%;
     padding: 10px;
@@ -77,7 +72,6 @@ dialog select {
     font-size: 1rem;
 }
 
-/* Botão dentro do dialog */
 #btn-dialog-register {
     background-color: #007BFF;
     color: white;
@@ -94,7 +88,6 @@ dialog select {
     background-color: #0056b3;
 }
 
-/* Botão de fechar o diálogo */
 #fechar-dialog {
     position: absolute;
     top: 10px;
@@ -105,7 +98,6 @@ dialog select {
     cursor: pointer;
 }
 
-/* Alerta de ponto registrado */
 #alerta-ponto-registrado {
     background-color: #4CAF50;
     color: white;
@@ -122,7 +114,6 @@ dialog select {
     display: block;
 }
 
-/* Esconder alerta por padrão */
 .hidden {
     display: none;
 }
