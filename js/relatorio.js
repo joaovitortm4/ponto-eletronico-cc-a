@@ -7,39 +7,70 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let records = JSON.parse(localStorage.getItem("registers")) || [];
   let justificativas = JSON.parse(localStorage.getItem("justificativas")) || [];
+  
+  records.forEach((record) => {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const recordDate = parseDate(record.date);
+    record.isPastDate = recordDate < today;
+  });
 
   function displayRecords(recordsToDisplay) {
     recordsTableBody.innerHTML = "";
 
+    const recordsByDate = {};
+
     recordsToDisplay.forEach((record) => {
-      const row = document.createElement("tr");
-
-      if (record.isPastDate) {
-        row.classList.add("past-record");
+      if (!recordsByDate[record.date]) {
+        recordsByDate[record.date] = [];
       }
-      if (record.isEdited) {
-        row.classList.add("edited-record");
-      }
-      if (record.note) {
-        row.classList.add("noted-record");
-      }
+      recordsByDate[record.date].push(record);
+    });
 
-      row.innerHTML = `
-                  <td>${record.date}</td>
-                  <td>${record.time}</td>
-                  <td>${record.type}</td>
-                  <td>${record.note || ""}</td>
-                  <td>
-                      <button class="edit-record" data-id="${
-                        record.id
-                      }">Editar</button>
-                      <button class="delete-record" data-id="${
-                        record.id
-                      }">Excluir</button>
-                  </td>
-              `;
+    const sortedDates = Object.keys(recordsByDate).sort((a, b) => {
+      const dateA = parseDate(a);
+      const dateB = parseDate(b);
+      return dateA - dateB;
+    });
 
-      recordsTableBody.appendChild(row);
+    sortedDates.forEach((date) => {
+      const dateRow = document.createElement("tr");
+      dateRow.classList.add("date-separator");
+      dateRow.innerHTML = `
+          <td colspan="5"><strong>${date}</strong></td>
+        `;
+      recordsTableBody.appendChild(dateRow);
+
+      recordsByDate[date].forEach((record) => {
+        const row = document.createElement("tr");
+
+        if (record.isPastDate) {
+          row.classList.add("past-record");
+        }
+        if (record.isEdited) {
+          row.classList.add("edited-record");
+        }
+        if (record.note) {
+          row.classList.add("noted-record");
+        }
+
+        row.innerHTML = `
+              <td>${record.date}</td>
+              <td>${record.time}</td>
+              <td>${record.type}</td>
+              <td>${record.note || ""}</td>
+              <td class="actions">
+                <button class="edit-record" data-id="${
+                  record.id
+                }">Editar</button>
+                <button class="delete-record" data-id="${
+                  record.id
+                }">Excluir</button>
+              </td>
+            `;
+
+        recordsTableBody.appendChild(row);
+      });
     });
 
     const editButtons = document.querySelectorAll(".edit-record");
@@ -55,17 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function deleteRecord(event) {
-    const recordId = event.target.getAttribute("data-id");
-    const recordIndex = records.findIndex((record) => record.id === recordId);
-
-    if (recordIndex !== -1) {
-      const confirmDelete = confirm("Deseja realmente excluir este registro?");
-      if (confirmDelete) {
-        records.splice(recordIndex, 1);
-        localStorage.setItem("registers", JSON.stringify(records));
-        applyFilter();
-      }
-    }
+    alert("O ponto não pode ser excluído.");
   }
 
   function openEditDialog(event) {
@@ -133,6 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  filterPeriod.addEventListener("change", applyFilter);
+
   function applyFilter() {
     const filterValue = filterPeriod.value;
     let filteredRecords = records;
@@ -198,10 +221,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       row.innerHTML = `
-                  <td>${justificativa.date}</td>
-                  <td>${justificativa.justificativa}</td>
-                  <td>${arquivoLink}</td>
-              `;
+            <td>${justificativa.date}</td>
+            <td>${justificativa.justificativa}</td>
+            <td>${arquivoLink}</td>
+          `;
 
       justificativasTableBody.appendChild(row);
     });
