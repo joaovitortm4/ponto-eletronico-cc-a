@@ -1,39 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="CSS/style.css">
-</head>
-<body class="body-class">
-    <div class="caixa">
-        <div class="data-hora">
-            <p id="dia-semana"></p>
-            <p id="data-atual"></p>
-            <p id="hora-atual"></p>
-        </div>
-        <button id="btn-registrar-ponto">Registrar ponto</button>
-    </div>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sistema de Ponto Eletrônico</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="index.html">Registrar Ponto</a></li>
+        <li><a href="relatorio.html">Relatório</a></li>
+        <li>
+          <a href="#" id="btn-justificar-ausencia">Justificar Ausência</a>
+        </li>
+      </ul>
+    </nav>
+
+    <main>
+      <section class="data-hora">
+        <p id="dia-semana"></p>
+        <p id="data-atual"></p>
+        <p id="hora-atual"></p>
+      </section>
+
+      <section class="botoes">
+        <button id="btn-registrar-ponto" class="primary">
+          Registrar Ponto
+        </button>
+      </section>
+    </main>
 
     <dialog id="dialog-ponto">
-        <p id="dialog-data">Data</p>
-        <p id="dialog-hora">Hora</p>
-        <select id="register-type">
+      <form method="dialog">
+        <h2>Registrar Ponto</h2>
+        <p id="dialog-data"></p>
+        <p id="dialog-hora"></p>
+        <p>
+          <label for="register-type">Tipo de Registro:</label>
+          <select name="register-type" id="register-type">
             <option value="entrada">Entrada</option>
-            <option value="intervalo">Intervalo</option>
-            <option value="volta-intervalo">Volta Intervalo</option>
             <option value="saida">Saída</option>
-        </select>
-        <button id="btn-dialog-register">Registrar</button>
-        <p id="dialog-ultimo-registro">Ulitimo ponto registrado:</p>
-        <button id="fechar-dialog">X</button>
+            <option value="entrada-intervalo">Entrada Intervalo</option>
+            <option value="saida-intervalo">Saída Intervalo</option>
+          </select>
+        </p>
+        <p>
+          <label for="dialog-date">Data do Registro:</label>
+          <input type="date" id="dialog-date" max="" />
+        </p>
+        <p>
+          <label for="dialog-note">Observação:</label><br />
+          <textarea
+            id="dialog-note"
+            rows="3"
+            cols="30"
+            placeholder="Adicione uma observação..."
+          ></textarea>
+        </p>
+        <menu>
+          <button id="btn-dialog-register" class="primary">Registrar</button>
+          <button id="dialog-fechar">Fechar</button>
+        </menu>
+      </form>
+    </dialog>
+    <dialog id="dialog-justificativa">
+      <form method="dialog">
+        <h2>Justificar Ausência</h2>
+        <p>
+          <label for="justificativa-data">Data da Ausência:</label>
+          <input type="date" id="justificativa-data" max="" />
+        </p>
+        <p>
+          <label for="justificativa-texto">Justificativa:</label><br />
+          <textarea
+            id="justificativa-texto"
+            rows="3"
+            cols="30"
+            placeholder="Descreva a justificativa..."
+          ></textarea>
+        </p>
+        <p>
+          <label for="justificativa-arquivo">Anexar Arquivo:</label>
+          <input type="file" id="justificativa-arquivo" />
+        </p>
+        <p>
+          <small
+            >Nota: O arquivo anexado só estará disponível enquanto esta página
+            estiver aberta.</small
+          >
+        </p>
+        <menu>
+          <button id="btn-enviar-justificativa" class="primary">
+            Enviar Justificativa
+          </button>
+          <button id="dialog-justificativa-fechar">Fechar</button>
+        </menu>
+      </form>
     </dialog>
 
-    <div id="alerta-ponto-registrado" class="hidden">
-        <p>Ponto registrado com sucesso!</p>
+    <div id="alerta-ponto-registrado" class="alert hidden">
+      <p id="alerta-mensagem"></p>
     </div>
 
     <script src="js/index.js"></script>
-</body>
+  </body>
 </html>
