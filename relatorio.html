@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Relatório de Pontos</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="index.html">Registrar Ponto</a></li>
+        <li><a href="relatorio.html">Relatório</a></li>
+        <li>
+          <a href="#" id="btn-justificar-ausencia">Justificar Ausência</a>
+        </li>
+      </ul>
+    </nav>
+
+    <main>
+      <h1>Relatório de Pontos</h1>
+      <section class="filtros">
+        <label for="filter-period">Filtrar por período:</label>
+        <select id="filter-period">
+          <option value="all">Todos</option>
+          <option value="last-week">Última Semana</option>
+          <option value="last-month">Último Mês</option>
+        </select>
+      </section>
+
+      <section id="records-section">
+        <h2>Registros de Ponto</h2>
+        <table id="records-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Hora</th>
+              <th>Tipo</th>
+              <th>Observação</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <section id="justificativas-section">
+        <h2>Justificativas de Ausência</h2>
+        <table id="justificativas-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Justificativa</th>
+              <th>Arquivo</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <dialog id="dialog-edit-register">
+        <form method="dialog">
+          <h2>Editar Registro</h2>
+          <p>
+            <label for="edit-date">Data:</label>
+            <input type="date" id="edit-date" />
+          </p>
+          <p>
+            <label for="edit-time">Hora:</label>
+            <input type="time" id="edit-time" />
+          </p>
+          <p>
+            <label for="edit-type">Tipo de Registro:</label>
+            <select id="edit-type">
+              <option value="entrada">Entrada</option>
+              <option value="saida">Saída</option>
+              <option value="entrada-intervalo">Entrada Intervalo</option>
+              <option value="saida-intervalo">Saída Intervalo</option>
+            </select>
+          </p>
+          <p>
+            <label for="edit-note">Observação:</label><br />
+            <textarea id="edit-note" rows="3" cols="30"></textarea>
+          </p>
+          <menu>
+            <button id="btn-save-edit" class="primary">Salvar</button>
+            <button id="btn-cancel-edit">Cancelar</button>
+          </menu>
+        </form>
+      </dialog>
+
+      <script src="js/relatorio.js"></script>
+    </main>
+  </body>
+</html>
