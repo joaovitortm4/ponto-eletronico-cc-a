@@ -1,119 +1,272 @@
-.body-class {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f0f0f0;
-    height: 100vh;
-    margin: 0;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.caixa {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-    width: 180px;
-    display: flex;
-    flex-direction: column;
-    height: 180px;
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+nav {
+  background-color: #007bff;
+  padding: 10px 0;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+nav ul li {
+  margin: 5px 15px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+main {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
 }
 
 .data-hora {
-    text-align: center;
-    margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .data-hora p {
-    font-size: 1.3rem;
-    margin: 5px 0;
+  font-size: 1.5em;
+  margin: 5px 0;
 }
 
-#btn-registrar-ponto {
-    background-color: black;
-    border: none;
-    color: rgb(232, 232, 0);
-    padding: 15px 32px;
-    text-align: center;
-    font-size: 16px;
-    margin-top: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    width: 100%;
+.botoes {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-#btn-registrar-ponto:hover {
-    background-color: #2f3c30;
+button {
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+button.primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+button.primary:hover {
+  background-color: #0056b3;
+}
+
+button.secondary {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+}
+
+button.secondary:hover {
+  background-color: #5a6268;
+}
+
+button:not(.primary):not(.secondary) {
+  background-color: #e0e0e0;
+  border: none;
+}
+
+button:not(.primary):not(.secondary):hover {
+  background-color: #d5d5d5;
 }
 
 dialog {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    padding: 20px;
-    background-color: #fff;
-    text-align: center;
+  border: none;
+  border-radius: 5px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+dialog h2 {
+  margin-bottom: 15px;
 }
 
 dialog p {
+  margin-bottom: 10px;
+}
+
+dialog label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+dialog input[type="date"],
+dialog input[type="time"],
+dialog select,
+dialog textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+dialog menu {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.alert {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #28a745;
+  color: #fff;
+  padding: 15px 20px;
+  border-radius: 5px;
+}
+
+.alert.error {
+  background-color: #dc3545;
+}
+
+.alert.hidden {
+  display: none;
+}
+
+.records-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.records-container h2 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table thead {
+  background-color: #007bff;
+  color: #fff;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table tr:hover {
+  background-color: #ddd;
+}
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.past-record td {
+  background-color: #fff3cd;
+}
+
+.edited-record td {
+  background-color: #d1ecf1;
+}
+
+.noted-record td {
+  font-style: italic;
+}
+
+.past-record.edited-record td {
+  background-color: #b8daff;
+}
+
+.past-record.noted-record td,
+.edited-record.noted-record td {
+  font-style: italic;
+}
+
+.actions button {
+  margin-right: 5px;
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.actions button:hover {
+  text-decoration: underline;
+}
+
+dialog#dialog-edit-register form {
+  display: flex;
+  flex-direction: column;
+}
+
+dialog#dialog-edit-register p {
+  margin-bottom: 10px;
+}
+
+dialog#dialog-edit-register label {
+  font-weight: bold;
+}
+
+dialog#dialog-edit-register input,
+dialog#dialog-edit-register select,
+dialog#dialog-edit-register textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+dialog#dialog-edit-register menu {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  nav ul {
+    flex-direction: column;
+  }
+
+  nav ul li {
     margin: 10px 0;
-    font-size: 1.2rem;
-}
+  }
 
-dialog select {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-#btn-dialog-register {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    width: 100%;
-    transition: background-color 0.3s ease;
-}
-
-#btn-dialog-register:hover {
-    background-color: #0056b3;
-}
-
-#fechar-dialog {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: transparent;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-
-#alerta-ponto-registrado {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: none;
-}
-
-#alerta-ponto-registrado.show {
-    display: block;
-}
-
-.hidden {
-    display: none;
+  dialog {
+    padding: 15px;
+  }
 }
