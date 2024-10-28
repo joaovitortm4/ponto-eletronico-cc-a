@@ -197,24 +197,40 @@ table th {
   padding-bottom: 12px;
 }
 
-.past-record td {
+.date-separator td {
+  background-color: #e9ecef;
+  font-weight: bold;
+}
+
+.noted-record td {
   background-color: #fff3cd;
+  font-style: italic;
+}
+
+.past-record td {
+  background-color: #d4edda;
+}
+
+.past-record.noted-record td {
+  background-color: #ffeeba;
+  font-style: italic;
 }
 
 .edited-record td {
   background-color: #d1ecf1;
 }
 
-.noted-record td {
+.edited-record.noted-record td {
+  background-color: #bee5eb;
   font-style: italic;
 }
 
 .past-record.edited-record td {
-  background-color: #b8daff;
+  background-color: #c3e6cb;
 }
 
-.past-record.noted-record td,
-.edited-record.noted-record td {
+.past-record.edited-record.noted-record td {
+  background-color: #d6d8db;
   font-style: italic;
 }
 
