@@ -2,7 +2,7 @@
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
-    <title>Sistema de Ponto Eletrônico</title>
+    <title>Relatório de Pontos</title>
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
@@ -17,91 +17,78 @@
     </nav>
 
     <main>
-      <section class="data-hora">
-        <p id="dia-semana"></p>
-        <p id="data-atual"></p>
-        <p id="hora-atual"></p>
+      <h1>Relatório de Pontos</h1>
+      <section class="filtros">
+        <label for="filter-period">Filtrar por período:</label>
+        <select id="filter-period">
+          <option value="all">Todos</option>
+          <option value="last-week">Última Semana</option>
+          <option value="last-month">Último Mês</option>
+        </select>
       </section>
 
-      <section class="botoes">
-        <button id="btn-registrar-ponto" class="primary">
-          Registrar Ponto
-        </button>
+      <section id="records-section">
+        <h2>Registros de Ponto</h2>
+        <table id="records-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Hora</th>
+              <th>Tipo</th>
+              <th>Observação</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </section>
+
+      <section id="justificativas-section">
+        <h2>Justificativas de Ausência</h2>
+        <table id="justificativas-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Justificativa</th>
+              <th>Arquivo</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <dialog id="dialog-edit-register">
+        <form method="dialog">
+          <h2>Editar Registro</h2>
+          <p>
+            <label for="edit-date">Data:</label>
+            <input type="date" id="edit-date" />
+          </p>
+          <p>
+            <label for="edit-time">Hora:</label>
+            <input type="time" id="edit-time" />
+          </p>
+          <p>
+            <label for="edit-type">Tipo de Registro:</label>
+            <select id="edit-type">
+              <option value="entrada">Entrada</option>
+              <option value="saida">Saída</option>
+              <option value="entrada-intervalo">Entrada Intervalo</option>
+              <option value="saida-intervalo">Saída Intervalo</option>
+            </select>
+          </p>
+          <p>
+            <label for="edit-note">Observação:</label><br />
+            <textarea id="edit-note" rows="3" cols="30"></textarea>
+          </p>
+          <menu>
+            <button id="btn-save-edit" class="primary">Salvar</button>
+            <button id="btn-cancel-edit">Cancelar</button>
+          </menu>
+        </form>
+      </dialog>
+
+      <script src="js/relatorio.js"></script>
     </main>
-
-    <dialog id="dialog-ponto">
-      <form method="dialog">
-        <h2>Registrar Ponto</h2>
-        <p id="dialog-data"></p>
-        <p id="dialog-hora"></p>
-        <p>
-          <label for="register-type">Tipo de Registro:</label>
-          <select name="register-type" id="register-type">
-            <option value="entrada">Entrada</option>
-            <option value="saida">Saída</option>
-            <option value="entrada-intervalo">Entrada Intervalo</option>
-            <option value="saida-intervalo">Saída Intervalo</option>
-          </select>
-        </p>
-        <p>
-          <label for="dialog-date">Data do Registro:</label>
-          <input type="date" id="dialog-date" max="" />
-        </p>
-        <p>
-          <label for="dialog-note">Observação:</label><br />
-          <textarea
-            id="dialog-note"
-            rows="3"
-            cols="30"
-            placeholder="Adicione uma observação..."
-          ></textarea>
-        </p>
-        <menu>
-          <button id="btn-dialog-register" class="primary">Registrar</button>
-          <button id="dialog-fechar">Fechar</button>
-        </menu>
-      </form>
-    </dialog>
-    <dialog id="dialog-justificativa">
-      <form method="dialog">
-        <h2>Justificar Ausência</h2>
-        <p>
-          <label for="justificativa-data">Data da Ausência:</label>
-          <input type="date" id="justificativa-data" max="" />
-        </p>
-        <p>
-          <label for="justificativa-texto">Justificativa:</label><br />
-          <textarea
-            id="justificativa-texto"
-            rows="3"
-            cols="30"
-            placeholder="Descreva a justificativa..."
-          ></textarea>
-        </p>
-        <p>
-          <label for="justificativa-arquivo">Anexar Arquivo:</label>
-          <input type="file" id="justificativa-arquivo" />
-        </p>
-        <p>
-          <small
-            >Nota: O arquivo anexado só estará disponível enquanto esta página
-            estiver aberta.</small
-          >
-        </p>
-        <menu>
-          <button id="btn-enviar-justificativa" class="primary">
-            Enviar Justificativa
-          </button>
-          <button id="dialog-justificativa-fechar">Fechar</button>
-        </menu>
-      </form>
-    </dialog>
-
-    <div id="alerta-ponto-registrado" class="alert hidden">
-      <p id="alerta-mensagem"></p>
-    </div>
-
-    <script src="js/index.js"></script>
   </body>
 </html>
