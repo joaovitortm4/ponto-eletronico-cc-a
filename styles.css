@@ -1,0 +1,288 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+nav {
+  background-color: #007bff;
+  padding: 10px 0;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+nav ul li {
+  margin: 5px 15px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+main {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.data-hora {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.data-hora p {
+  font-size: 1.5em;
+  margin: 5px 0;
+}
+
+.botoes {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+button.primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+button.primary:hover {
+  background-color: #0056b3;
+}
+
+button.secondary {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+}
+
+button.secondary:hover {
+  background-color: #5a6268;
+}
+
+button:not(.primary):not(.secondary) {
+  background-color: #e0e0e0;
+  border: none;
+}
+
+button:not(.primary):not(.secondary):hover {
+  background-color: #d5d5d5;
+}
+
+dialog {
+  border: none;
+  border-radius: 5px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+dialog h2 {
+  margin-bottom: 15px;
+}
+
+dialog p {
+  margin-bottom: 10px;
+}
+
+dialog label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+dialog input[type="date"],
+dialog input[type="time"],
+dialog select,
+dialog textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+dialog menu {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.alert {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #28a745;
+  color: #fff;
+  padding: 15px 20px;
+  border-radius: 5px;
+}
+
+.alert.error {
+  background-color: #dc3545;
+}
+
+.alert.hidden {
+  display: none;
+}
+
+.records-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.records-container h2 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table thead {
+  background-color: #007bff;
+  color: #fff;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table tr:hover {
+  background-color: #ddd;
+}
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.date-separator td {
+  background-color: #e9ecef;
+  font-weight: bold;
+}
+
+.noted-record td {
+  background-color: #fff3cd;
+  font-style: italic;
+}
+
+.past-record td {
+  background-color: #e692c5;
+}
+
+.past-record.noted-record td {
+  background-color: #ffeeba;
+  font-style: italic;
+}
+
+.edited-record td {
+  background-color: #d1ecf1;
+}
+
+.edited-record.noted-record td {
+  background-color: #bee5eb;
+  font-style: italic;
+}
+
+.past-record.edited-record td {
+  background-color: #c3e6cb;
+}
+
+.past-record.edited-record.noted-record td {
+  background-color: #d6d8db;
+  font-style: italic;
+}
+
+.actions button {
+  margin-right: 5px;
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.actions button:hover {
+  text-decoration: underline;
+}
+
+dialog#dialog-edit-register form {
+  display: flex;
+  flex-direction: column;
+}
+
+dialog#dialog-edit-register p {
+  margin-bottom: 10px;
+}
+
+dialog#dialog-edit-register label {
+  font-weight: bold;
+}
+
+dialog#dialog-edit-register input,
+dialog#dialog-edit-register select,
+dialog#dialog-edit-register textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+dialog#dialog-edit-register menu {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  nav ul {
+    flex-direction: column;
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  dialog {
+    padding: 15px;
+  }
+}
