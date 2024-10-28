@@ -33,7 +33,10 @@ function formatDate(date) {
 }
 
 function formatDateInput(date) {
-  return date.toISOString().split("T")[0];
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 function formatTime(date) {
@@ -78,20 +81,26 @@ function registerPonto(e) {
   const note = dialogNote.value;
 
   const now = new Date();
-  const date = new Date(selectedDateValue);
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const selectedDate = new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate()
+  const [year, month, day] = selectedDateValue.split("-");
+  const selectedDate = new Date(Number(year), Number(month) - 1, Number(day));
+
+  const nowDateOnly = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate()
+  );
+  const selectedDateOnly = new Date(
+    selectedDate.getFullYear(),
+    selectedDate.getMonth(),
+    selectedDate.getDate()
   );
 
-  if (date > now) {
+  if (selectedDateOnly > nowDateOnly) {
     showAlert("Não é possível registrar uma data futura.", true);
     return;
   }
 
-  const isPastDate = selectedDate < today;
+  const createdDate = formatDate(nowDateOnly);
 
   const time = formatTime(now);
 
@@ -99,17 +108,17 @@ function registerPonto(e) {
     .then((location) => {
       const ponto = {
         id: generateId(),
-        date: formatDate(date),
+        date: formatDate(selectedDateOnly),
         time: time,
         type: registerType,
         note: note,
         location: location,
-        isPastDate: isPastDate,
+        isPastDate: selectedDateOnly < nowDateOnly,
         isEdited: false,
+        createdDate: createdDate,
       };
 
       saveRegister(ponto);
-
       showAlert("Ponto registrado com sucesso!");
 
       dialogPonto.close();
@@ -158,7 +167,8 @@ function enviarJustificativa(e) {
   const arquivo = justificativaArquivo.files[0];
 
   const now = new Date();
-  const date = new Date(selectedDate);
+  const [year, month, day] = selectedDate.split("-");
+  const date = new Date(year, month - 1, day);
   if (date > now) {
     showAlert("Não é possível justificar uma data futura.", true);
     return;

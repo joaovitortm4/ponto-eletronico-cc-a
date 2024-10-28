@@ -7,12 +7,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let records = JSON.parse(localStorage.getItem("registers")) || [];
   let justificativas = JSON.parse(localStorage.getItem("justificativas")) || [];
-  
+
   records.forEach((record) => {
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    if (!record.createdDate) {
+      record.createdDate = record.date;
+    }
+  });
+
+  localStorage.setItem("registers", JSON.stringify(records));
+
+  records.forEach((record) => {
     const recordDate = parseDate(record.date);
-    record.isPastDate = recordDate < today;
+    const createdDate = parseDate(record.createdDate);
+    record.isPastDate = recordDate < createdDate;
   });
 
   function displayRecords(recordsToDisplay) {
@@ -37,22 +44,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const dateRow = document.createElement("tr");
       dateRow.classList.add("date-separator");
       dateRow.innerHTML = `
-          <td colspan="5"><strong>${date}</strong></td>
+            <td colspan="5"><strong>${date}</strong></td>
         `;
       recordsTableBody.appendChild(dateRow);
 
       recordsByDate[date].forEach((record) => {
         const row = document.createElement("tr");
 
-        if (record.isPastDate) {
-          row.classList.add("past-record");
-        }
-        if (record.isEdited) {
-          row.classList.add("edited-record");
-        }
-        if (record.note) {
-          row.classList.add("noted-record");
-        }
+        let classes = [];
+        if (record.isPastDate) classes.push("past-record");
+        if (record.isEdited) classes.push("edited-record");
+        if (record.note) classes.push("noted-record");
+        row.className = classes.join(" ");
 
         row.innerHTML = `
               <td>${record.date}</td>
@@ -60,14 +63,14 @@ document.addEventListener("DOMContentLoaded", () => {
               <td>${record.type}</td>
               <td>${record.note || ""}</td>
               <td class="actions">
-                <button class="edit-record" data-id="${
-                  record.id
-                }">Editar</button>
-                <button class="delete-record" data-id="${
-                  record.id
-                }">Excluir</button>
+                  <button class="edit-record" data-id="${
+                    record.id
+                  }">Editar</button>
+                  <button class="delete-record" data-id="${
+                    record.id
+                  }">Excluir</button>
               </td>
-            `;
+          `;
 
         recordsTableBody.appendChild(row);
       });
@@ -102,36 +105,40 @@ document.addEventListener("DOMContentLoaded", () => {
       const btnSaveEdit = document.getElementById("btn-save-edit");
       const btnCancelEdit = document.getElementById("btn-cancel-edit");
 
-      editDate.value = formatDateInput(parseDate(record.date));
+      const [day, month, year] = record.date.split("/");
+      editDate.value = formatDateInput(new Date(year, month - 1, day));
       editTime.value = record.time;
       editType.value = record.type;
       editNote.value = record.note || "";
 
       function saveEdit() {
-        const newDate = new Date(editDate.value);
+        const newDateValue = editDate.value;
+        const newTimeValue = editTime.value;
+        const newTypeValue = editType.value;
+        const newNoteValue = editNote.value;
+
         const now = new Date();
+        const [year, month, day] = newDateValue.split("-");
+        const newDate = new Date(year, month - 1, day);
 
         if (newDate > now) {
           alert("Não é possível definir uma data futura.");
           return;
         }
 
-        const today = new Date(
-          now.getFullYear(),
-          now.getMonth(),
-          now.getDate()
-        );
         const selectedDate = new Date(
           newDate.getFullYear(),
           newDate.getMonth(),
           newDate.getDate()
         );
-        record.isPastDate = selectedDate < today;
+        const createdDate = parseDate(record.createdDate);
+
+        record.isPastDate = selectedDate < createdDate;
 
         record.date = formatDate(newDate);
-        record.time = editTime.value;
-        record.type = editType.value;
-        record.note = editNote.value;
+        record.time = newTimeValue;
+        record.type = newTypeValue;
+        record.note = newNoteValue;
         record.isEdited = true;
 
         localStorage.setItem("registers", JSON.stringify(records));
@@ -188,6 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function parseDate(dateString) {
+    if (!dateString) return null;
     const [day, month, year] = dateString.split("/");
     return new Date(year, month - 1, day);
   }
